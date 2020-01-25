@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Lato", sans-serif;
+      }
+    </style>
+    <title>What day is Doomsday?</title>
+  </head>
+  <body>
+    <div class="container" style="margin-top:.6rem;max-width:70ch">
+      <h1>What day is Doomsday?</h1>
+      <form action="JavaScript:doom();">
+        <p>Select a year between 1800 and 2199:</p>
+        <div style="display:flex;flex-flow:row wrap;margin-bottom:1rem">
+          <input
+            class="form-control"
+            style="max-width:5em;margin-right:1em"
+            type="number"
+            min="1800"
+            max="2199"
+            value="2020"
+            id="yearSelect"
+          /><button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+      <p>
+        <span id="yearReiteration">2020</span>
+        <span id="leapDisplay"><strong>is</strong></span> a leap year.
+        <a
+          href="https://en.wikipedia.org/wiki/Doomsday_rule"
+          target="_blank"
+          rel="noopener"
+          >Doomsday</a
+        >
+        is <span id="doomsdayDisplay"><strong>Saturday</strong></span
+        >.
+      </p>
+      <p>
+        As a reminder, this day of the week will apply to the following dates:
+      </p>
+      <ul>
+        <li>January <span id="janDate">4</span></li>
+        <li>February <span id="febDate">29</span></li>
+        <li>March 14&ensp;(<strong>Pi Day</strong>)</li>
+        <li>April 4&ensp;(<strong>4/4</strong>)</li>
+        <li>May 9&ensp;(<strong>5/9</strong>)</li>
+        <li>June 6&ensp;(<strong>6/6</strong>)</li>
+        <li>July 11&ensp;(<strong>7/11</strong>)</li>
+        <li>August 8&ensp;(<strong>8/8</strong>)</li>
+        <li>September 5&ensp;(<strong>9/5</strong>)</li>
+        <li>October 10&ensp;(<strong>10/10</strong>)</li>
+        <li>November 7&ensp;(<strong>11/7</strong>)</li>
+        <li>December 12&ensp;(<strong>12/12</strong>)</li>
+      </ul>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
+
+      let year = currentYear;
+      document.getElementById("yearSelect").value = year;
+
+      function leap() {
+        if (year % 400 === 0) {
+          return true;
+        } else if (year % 100 === 0) {
+          return false;
+        } else if (year % 4 === 0) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+      let isLeap = leap();
+
+      function doomsday() {
+        let shortYear = year.toString().substr(-2);
+        shortYear = parseInt(shortYear);
+        if (shortYear % 2 != 0) {
+          shortYear += 11;
+        }
+        shortYear /= 2;
+        if (shortYear % 2 != 0) {
+          shortYear += 11;
+        }
+        shortYear = Math.abs((shortYear % 7) - 7);
+        if (1800 <= year && year < 1900) {
+          shortYear += 6;
+        } else if (1900 <= year && year < 2000) {
+          shortYear += 4;
+        } else if (2000 <= year && year < 2100) {
+          shortYear += 3;
+        } else {
+          shortYear += 1;
+        }
+        shortYear = shortYear % 7;
+        return shortYear;
+      }
+
+      let doomsdayNumber = doomsday();
+
+      function weekday() {
+        if (doomsdayNumber === 0) {
+          return "Saturday";
+        } else if (doomsdayNumber === 1) {
+          return "Sunday";
+        } else if (doomsdayNumber === 2) {
+          return "Monday";
+        } else if (doomsdayNumber === 3) {
+          return "Tuesday";
+        } else if (doomsdayNumber === 4) {
+          return "Wednesday";
+        } else if (doomsdayNumber === 5) {
+          return "Thursday";
+        } else {
+          return "Friday";
+        }
+      }
+
+      let weekdayName = weekday();
+
+      function doom() {
+        year = document.getElementById("yearSelect").value;
+
+        document.getElementById("yearReiteration").innerHTML = year;
+
+        isLeap = leap();
+
+        if (isLeap === true) {
+          document.getElementById("leapDisplay").innerHTML =
+            "<strong>is</strong>";
+          document.getElementById("janDate").innerHTML = "4";
+          document.getElementById("febDate").innerHTML = "29";
+        } else {
+          document.getElementById("leapDisplay").innerHTML =
+            "is <strong>not</strong>";
+          document.getElementById("janDate").innerHTML = "3";
+          document.getElementById("febDate").innerHTML = "28";
+        }
+
+        doomsdayNumber = doomsday();
+
+        weekdayName = weekday();
+
+        document.getElementById("doomsdayDisplay").innerHTML =
+          "<strong>" + weekdayName + "</strong>";
+      }
+
+      doom();
+    </script>
+  </body>
+</html>
