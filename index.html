@@ -27,7 +27,7 @@
     <div class="container" style="margin-top:.6rem;max-width:70ch">
       <h1>What day is Doomsday?</h1>
       <form action="JavaScript:doom();">
-        <p>Select a year between 1800 and 2199:</p>
+        <p id="instructions">Select a year between 1800 and 2199:</p>
         <div style="display:flex;flex-flow:row wrap;margin-bottom:1rem">
           <input
             class="form-control"
@@ -37,6 +37,7 @@
             max="2199"
             value="2020"
             id="yearSelect"
+            aria-labelledby="instructions"
           /><button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form>
