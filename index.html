@@ -42,7 +42,9 @@
             value="2020"
             id="yearSelect"
             aria-labelledby="instructions"
-          /><button type="submit" class="btn btn-primary">Submit</button>
+          /><button type="submit" class="btn btn-primary" id="submitButton">
+            Submit
+          </button>
         </div>
       </form>
       <p>
@@ -91,12 +93,16 @@
       crossorigin="anonymous"
     ></script>
     <script>
+      // Set select to current year
       const currentDate = new Date();
       const currentYear = currentDate.getFullYear();
+      document.getElementById("yearSelect").value = currentYear;
 
-      let year = currentYear;
-      document.getElementById("yearSelect").value = year;
+      // Initialize a couple other variables
+      let year = 2020;
+      let doomsdayNumber = 0;
 
+      // Function to determine leap years
       function leap() {
         if (year % 400 === 0) {
           return true;
@@ -109,8 +115,7 @@
         }
       }
 
-      let isLeap = leap();
-
+      // Function to calculate Doomsday
       function doomsday() {
         let shortYear = year.toString().substr(-2);
         shortYear = parseInt(shortYear);
@@ -135,8 +140,7 @@
         return shortYear;
       }
 
-      let doomsdayNumber = doomsday();
-
+      // Function to associate results with weekdays
       function weekday() {
         if (doomsdayNumber === 0) {
           return "Saturday";
@@ -155,14 +159,14 @@
         }
       }
 
-      let weekdayName = weekday();
-
+      // Primary, combined function
       function doom() {
         year = document.getElementById("yearSelect").value;
+        doomsdayNumber = doomsday();
+        const isLeap = leap();
+        const weekdayName = weekday();
 
         document.getElementById("yearReiteration").innerHTML = year;
-
-        isLeap = leap();
 
         if (isLeap === true) {
           document.getElementById("leapDisplay").innerHTML =
@@ -176,14 +180,13 @@
           document.getElementById("febDate").innerHTML = "28";
         }
 
-        doomsdayNumber = doomsday();
-
-        weekdayName = weekday();
-
         document.getElementById("doomsdayDisplay").innerHTML =
           "<strong>" + weekdayName + "</strong>";
+
+        document.getElementById("yearSelect").blur();
       }
 
+      // Run primary function on page load using current year
       doom();
     </script>
   </body>
