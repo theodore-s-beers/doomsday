@@ -1,0 +1,19 @@
+body {
+  font-family: Lora, sans-serif;
+}
+
+.container {
+  margin-top: 0.6rem;
+  max-width: 70ch;
+}
+
+#form-elements {
+  display: flex;
+  flex-flow: row wrap;
+  margin-bottom: 1rem;
+}
+
+#yearSelect {
+  margin-right: 1em;
+  width: 5.3em;
+}
