@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "build": "esbuild ts/doomsday.ts --minify --sourcemap --outfile=js/doomsday.min.js",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.2",
+    "prettier": "^3.4.2"
+  }
+}
