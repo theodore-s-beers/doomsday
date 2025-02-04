@@ -87,6 +87,7 @@ function doom() {
   const doomsdayNum = doomsday(year);
   const doomsdayName = weekday(doomsdayNum);
 
+  yearSelect.value = String(year); // In case adjusted
   yearReit.innerHTML = String(year);
   leapDisplay.innerHTML = isLeap
     ? "<strong>is</strong>"
