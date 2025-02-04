@@ -39,7 +39,7 @@ function doomsday(year: number): number {
     2100: 1,
   };
   const century = Math.floor(year / 100) * 100;
-  shortYear += centuryOffsets[century] ?? 1;
+  shortYear += centuryOffsets[century] ?? 3; // Default to our century
 
   shortYear %= 7;
 
@@ -81,12 +81,13 @@ yearSelect.value = String(currentYear);
 
 // Primary, combined function
 function doom() {
-  const year = Number(yearSelect.value);
+  let year = Number(yearSelect.value);
+  year = year < 1800 ? 1800 : year > 2199 ? 2199 : year;
   const isLeap = leap(year);
   const doomsdayNum = doomsday(year);
   const doomsdayName = weekday(doomsdayNum);
 
-  yearReit.innerHTML = yearSelect.value;
+  yearReit.innerHTML = String(year);
   leapDisplay.innerHTML = isLeap
     ? "<strong>is</strong>"
     : "is <strong>not</strong>";
